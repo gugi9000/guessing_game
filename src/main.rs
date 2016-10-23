@@ -6,11 +6,13 @@ use rand::Rng;
 use std::io::Write;
 
 fn main() {
-    println!("Gæt tallet!");
+    println!("Gæt tallet mellem 1 og 100!");
 
     let secret = rand::thread_rng().gen_range(1, 101);
+    let mut tries = 0;
 
-    println!("Det, ikke særligt, hemmelige nummer er: {}", secret);
+    // Gør det mindre sjovt:
+    // println!("Det, ikke særligt, hemmelige nummer er: {}", secret);
 
     loop {
         print!("Skriv dit gæt: ");
@@ -21,15 +23,20 @@ fn main() {
         io::stdin().read_line(&mut guess)
             .expect("Kunne ikke indlæse.");
 
-        let guess: u32 = guess.trim().parse()
-            .expect("Skriv et tal, tak.");
-
-        println!("Du gættede på {}", guess);
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+        tries = tries + 1;
+        println!("I gæt nummer {} er {}", tries, guess);
 
         match guess.cmp(&secret) {
             Ordering::Less    => println!("For lavt."),
             Ordering::Greater => println!("For højt."),
-            Ordering::Equal   => println!("Du vandt!"),
+            Ordering::Equal   => {
+                println!("Du vandt på bare {} gæt!", tries);
+                break;
+            }
         }
     }
 }
