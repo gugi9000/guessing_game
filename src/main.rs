@@ -28,13 +28,17 @@ fn main() {
             Err(_) => continue,
         };
         tries = tries + 1;
-        println!("I gæt nummer {} er {}", tries, guess);
+        println!("Dit gæt nummer {} er {}", tries, guess);
 
         match guess.cmp(&secret) {
             Ordering::Less    => println!("For lavt."),
             Ordering::Greater => println!("For højt."),
             Ordering::Equal   => {
-                println!("Du vandt på bare {} gæt!", tries);
+                match tries {
+                    1 ... 4    => println!("Du vandt på bare {} gæt, 😎", tries),
+                    5 ... 10   => println!("Du vandt på {} gæt 👍", tries),
+                    _          => println!("Endelig. Hele {} gæt 😒", tries)
+                }
                 break;
             }
         }
