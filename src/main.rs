@@ -35,7 +35,7 @@ fn main() {
             Ordering::Greater => println!("For højt."),
             Ordering::Equal   => {
                 match tries {
-                    1 ... 4    => println!("Du vandt på bare {} gæt, 😎", tries),
+                    1 ... 4    => println!("Du vandt på bare {} gæt 😎", tries),
                     5 ... 10   => println!("Du vandt på {} gæt 👍", tries),
                     _          => println!("Endelig. Hele {} gæt 😒", tries)
                 }
